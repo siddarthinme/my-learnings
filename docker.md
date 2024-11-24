@@ -6,7 +6,7 @@ Here’s an explanation of each command along with a properly formatted presenta
 
 #### 1. **Run a MySQL Container**
 ```bash
-$ docker run --name mysql-container -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=test_db -p 3306:3306 -d mysql:latest
+docker run --name mysql-container -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=test_db -p 3306:3306 -d mysql:latest
 ```
 - **`--name mysql-container`**: Names the container as `mysql-container`.
 - **`-e MYSQL_ROOT_PASSWORD=password`**: Sets the root password for the MySQL database to `password`.
@@ -17,7 +17,7 @@ $ docker run --name mysql-container -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DAT
 
 #### 2. **Run the Student App Container**
 ```bash
-$ docker run -it --name student-app --link mysql-container:mysql-container -p 8081:8080 -e SPRING_DATASOURCE_URL=jdbc:mysql://mysql-container:3306/test_db -e SPRING_DATASOURCE_USERNAME=root -e SPRING_DATASOURCE_PASSWORD=password -d student-app
+docker run -it --name student-app --link mysql-container:mysql-container -p 8081:8080 -e SPRING_DATASOURCE_URL=jdbc:mysql://mysql-container:3306/test_db -e SPRING_DATASOURCE_USERNAME=root -e SPRING_DATASOURCE_PASSWORD=password -d student-app
 ```
 - **`-it`**: Allows interaction with the container if needed.
 - **`--name student-app`**: Names the container as `student-app`.
@@ -32,7 +32,7 @@ $ docker run -it --name student-app --link mysql-container:mysql-container -p 80
 
 ### **Command to Connect Student App to Host MySQL**
 ```bash
-$ docker run -it --name student-app-container --network host -d student-app
+docker run -it --name student-app-container --network host -d student-app
 ```
 - **`--network host`**: Makes the container use the host's networking stack, allowing direct communication with MySQL running on the host.
 - **`--name student-app-container`**: Names the container as `student-app-container`.
@@ -43,7 +43,7 @@ $ docker run -it --name student-app-container --network host -d student-app
 ### **Run Queries in the MySQL Container**
 1. Connect to the MySQL container:
 ```bash
-$ winpty docker exec -it <mysql-container-id> mysql -u root -p
+winpty docker exec -it <mysql-container-id> mysql -u root -p
 ```
 - **`winpty`**: Ensures proper terminal handling in environments like Windows.
 - **`docker exec -it <mysql-container-id>`**: Opens an interactive terminal session to the running container with the specified ID.
@@ -51,14 +51,14 @@ $ winpty docker exec -it <mysql-container-id> mysql -u root -p
 
 2. Example using a specific container ID:
 ```bash
-$ winpty docker exec -it c3bd578de7bb3a2a01be54eaf7a19a07f5cb929276da613dde6693223d3e6df0 mysql -u root -p
+winpty docker exec -it c3bd578de7bb3a2a01be54eaf7a19a07f5cb929276da613dde6693223d3e6df0 mysql -u root -p
 ```
 
 ---
 
 ### **Docker Login**
 ```bash
-$ docker login
+docker login
 ```
 - Prompts for Docker Hub credentials to authenticate and allow pushing/pulling images from your Docker Hub account.
 
@@ -66,7 +66,7 @@ $ docker login
 
 ### **Tagging the Docker Image**
 ```bash
-$ docker tag student-app siddarthinme/student-app:latest
+docker tag student-app siddarthinme/student-app:latest
 ```
 - **`docker tag student-app`**: Refers to the local `student-app` image.
 - **`siddarthinme/student-app:latest`**: Tags the image to your Docker Hub repository under the name `siddarthinme` and `student-app` with the `latest` tag.
@@ -75,7 +75,7 @@ $ docker tag student-app siddarthinme/student-app:latest
 
 ### **Push the Image to Docker Hub**
 ```bash
-$ docker push siddarthinme/student-app:latest
+docker push siddarthinme/student-app:latest
 ```
 - **`docker push siddarthinme/student-app:latest`**: Pushes the `latest` tag of `student-app` to the repository `siddarthinme` on Docker Hub.
 
